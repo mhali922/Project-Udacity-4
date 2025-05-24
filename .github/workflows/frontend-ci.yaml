@@ -20,7 +20,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('movie-app/frontend/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
@@ -47,7 +47,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('movie-app/frontend/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
@@ -75,7 +75,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('movie-app/frontend/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
@@ -84,5 +84,6 @@ jobs:
         working-directory: ./movie-app/frontend
 
       - name: Build Docker image
-        run: docker build -t movie-frontend ./movie-app/frontend
+        working-directory: ./movie-app/frontend
+        run: docker build -t movie-frontend .
 
