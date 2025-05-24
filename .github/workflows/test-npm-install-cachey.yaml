@@ -3,9 +3,6 @@ name: Test Frontend CI
 on: [workflow_dispatch]
 
 jobs:
-  test:
-
-jobs:
   frontend:
     runs-on: ubuntu-latest
     steps:
