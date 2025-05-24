@@ -24,19 +24,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Print working directory
-        run: |
-          pwd
-          ls -l
-          ls -l movie-app/frontend
-
       - name: Install dependencies
-        run: npm install
-        working-directory: ./movie-app/frontend
+        run: |
+          cd movie-app/frontend
+          npm install
 
       - name: Run lint
-        run: npm run lint
-        working-directory: ./movie-app/frontend
+        run: |
+          cd movie-app/frontend
+          npm run lint
 
   test:
     runs-on: ubuntu-latest
@@ -58,12 +54,15 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install dependencies
-        run: npm install
-        working-directory: ./movie-app/frontend
+        run: |
+          cd movie-app/frontend
+          npm install
 
       - name: Run tests
-        run: npm test -- --watchAll=false
-        working-directory: ./movie-app/frontend
+        run: |
+          cd movie-app/frontend
+          npm test -- --watchAll=false
+        
 
   build:
     runs-on: ubuntu-latest
@@ -86,10 +85,12 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install dependencies
-        run: npm install
-        working-directory: ./movie-app/frontend
-
+        run: |
+          cd movie-app/frontend
+          npm install
+        
       - name: Build Docker image
-        working-directory: ./movie-app/frontend
-        run: docker build -t movie-frontend .
+        run: | 
+          cd movie-app/frontend
+          docker build -t movie-frontend .
 
