@@ -1,0 +1,16 @@
+name: Debug Test
+
+on: [workflow_dispatch]
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Print working directory
+        run: |
+          pwd
+          ls -la
+          ls -la movie-app
+          ls -la movie-app/frontend
+
