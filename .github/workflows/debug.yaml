@@ -11,4 +11,6 @@ jobs:
         run: |
           pwd
           ls -la
-          ls -la Project-Udacity-4/movie-app/frontend
+          echo "PWD: $(pwd)"
+          ls -la
+          ls -la movie-app/frontend
