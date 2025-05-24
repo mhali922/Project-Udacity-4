@@ -25,11 +25,11 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install dependencies
-        working-directory: movie-app/frontend
+        working-directory: /home/runner/work/Project-Udacity-4/Project-Udacity-4/movie-app/frontend
         run: npm install
 
       - name: Run lint
-        working-directory: movie-app/frontend
+        working-directory: /home/runner/work/Project-Udacity-4/Project-Udacity-4/movie-app/frontend
         run: npm run lint
 
   test:
@@ -52,11 +52,11 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install dependencies
-        working-directory: movie-app/frontend
+        working-directory: /home/runner/work/Project-Udacity-4/Project-Udacity-4/movie-app/frontend
         run: npm install
 
       - name: Run tests
-        working-directory: movie-app/frontend
+        working-directory: /home/runner/work/Project-Udacity-4/Project-Udacity-4/movie-app/frontend
         run: npm test -- --watchAll=false
 
   build:
@@ -80,10 +80,10 @@ jobs:
             ${{ runner.os }}-node-
 
       - name: Install dependencies
-        working-directory: movie-app/frontend
+        working-directory: /home/runner/work/Project-Udacity-4/Project-Udacity-4/movie-app/frontend
         run: npm install
 
       - name: Build Docker image
-        working-directory: movie-app/frontend
+        working-directory: /home/runner/work/Project-Udacity-4/Project-Udacity-4/movie-app/frontend
         run: docker build -t movie-frontend .
 
