@@ -1,6 +1,0 @@
-- name: Check directory layout
-  run: |
-    pwd
-    ls -la
-    ls -la Project-Udacity-4/movie-app/frontend
-
