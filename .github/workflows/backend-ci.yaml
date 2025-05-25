@@ -1,0 +1,44 @@
+name: backend CI
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: movie-app/backend/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('movie-app/backend/package-lock.json') }}
+      - run: cd movie-app/backend && npm install
+      - run: cd movie-app/backend && npm run lint
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: movie-app/backend/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('movie-app/backend/package-lock.json') }}
+      - run: cd movie-app/backend && npm install
+      - run: cd movie-app/backend && npm test
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Docker Build
+        run: docker build -t movie-app/backend-app ./movie-app/backend
