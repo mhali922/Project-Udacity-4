@@ -23,4 +23,8 @@ jobs:
       - name: Install dependencies
         working-directory: movie-app/frontend
         run: npm install
+        
+      - name: Run linter
+        working-directory: movie-app/frontend
+        run: npm run lint
 
