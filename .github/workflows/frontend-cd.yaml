@@ -1,4 +1,4 @@
-name: Frontend Continuous Deployment
+name: Frontend CD Pipeline
 
 on:
   push:
@@ -8,59 +8,39 @@ on:
 
 env:
   AWS_REGION: us-east-1
-  ECR_REPOSITORY: 949829287785.dkr.ecr.us-east-1.amazonaws.com/udacity-frontend-repo
   IMAGE_TAG: latest
+  ECR_REPOSITORY: 949829287785.dkr.ecr.us-east-1.amazonaws.com/udacity-frontend-repo
 
 jobs:
   lint:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./movie-app/frontend
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Install dependencies
-        working-directory: ./movie-app/frontend
+      - uses: actions/checkout@v3
+      - name: Install deps
         run: npm install
-
-      - name: Lint code
-        working-directory: ./movie-app/frontend
+      - name: Run ESLint
         run: npm run lint
 
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./movie-app/frontend
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Install dependencies
-        working-directory: ./movie-app/frontend
+      - uses: actions/checkout@v3
+      - name: Install deps
         run: npm install
-
       - name: Run tests
-        working-directory: ./movie-app/frontend
-        run: npm run test
+        run: npm test
 
-  build:
+  build-and-push:
     needs: [lint, test]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Build Docker image
-        working-directory: ./movie-app/frontend
-        run: |
-          docker build \
-            --build-arg REACT_APP_MOVIE_API_URL=${{ secrets.REACT_APP_MOVIE_API_URL }} \
-            -t ${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} \
-            .
-
-  push:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -72,8 +52,14 @@ jobs:
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Push Docker image to ECR
+      - name: Build Docker image
+        working-directory: ./movie-app/frontend
+        run: |
+          docker build \
+            --build-arg REACT_APP_MOVIE_API_URL=${{ secrets.REACT_APP_MOVIE_API_URL }} \
+            -t $ECR_REPOSITORY:$IMAGE_TAG \
+            .
+
+      - name: Push Docker image
         run: docker push $ECR_REPOSITORY:$IMAGE_TAG
-        env:
-          ECR_REPOSITORY: ${{ env.ECR_REPOSITORY }}
-          IMAGE_TAG: latest
+
