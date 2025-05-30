@@ -18,21 +18,21 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Cache Node.js modules
+      - name: Cache npm modules
         uses: actions/cache@v4
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: movie-app/backend/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('movie-app/backend/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
       - name: Install dependencies
-        run: npm ci
         working-directory: ./movie-app/backend
+        run: npm ci
 
       - name: Run lint
-        run: npm run lint
         working-directory: ./movie-app/backend
+        run: npm run lint
 
   test:
     name: Run Backend Tests
@@ -47,21 +47,21 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Cache Node.js modules
+      - name: Cache npm modules
         uses: actions/cache@v4
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: movie-app/backend/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('movie-app/backend/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
       - name: Install dependencies
-        run: npm ci
         working-directory: ./movie-app/backend
+        run: npm ci
 
       - name: Run tests
-        run: npm run test
         working-directory: ./movie-app/backend
+        run: npm run test
 
   build:
     name: Build Backend Docker Image
