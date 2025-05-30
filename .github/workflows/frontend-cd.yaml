@@ -53,7 +53,7 @@ jobs:
           docker build \
             --build-arg REACT_APP_MOVIE_API_URL=${{ secrets.REACT_APP_MOVIE_API_URL }} \
             -t ${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }} \
-            ./frontend
+            .
 
   push:
     needs: build
