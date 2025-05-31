@@ -12,7 +12,8 @@ const movies = [
   { id: 1, title: 'The Shawshank Redemption', year: 1994 },
   { id: 2, title: 'The Godfather', year: 1972 },
   { id: 3, title: 'Inception', year: 2010 },
-  { id: 4, title: 'Mission Majnu', year: 2023 }
+  { id: 4, title: 'Mission Majnu', year: 2023 },
+  { id: 5, title: 'UGLY', year: 2025 }
 ];
 
 app.get('/movies', (req, res) => {
