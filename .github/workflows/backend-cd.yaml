@@ -67,10 +67,14 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ env.AWS_REGION }}
 
-      - name: Build Docker image
+      - name: Login to Amazon ECR
         run: |
-          docker build -t $ECR_REPOSITORY:$IMAGE_TAG ./movie-app/backend
-          
+          aws ecr get-login-password --region $AWS_REGION | \
+          docker login --username AWS --password-stdin 949829287785.dkr.ecr.us-east-1.amazonaws.com
+
+      - name: Build Docker image
+        run: docker build -t $ECR_REPOSITORY:$IMAGE_TAG ./movie-app/backend
+
       - name: Push Docker image to ECR
         run: docker push $ECR_REPOSITORY:$IMAGE_TAG
 
@@ -90,11 +94,6 @@ jobs:
 
       - name: Update kubeconfig for EKS cluster
         run: aws eks --region us-east-1 update-kubeconfig --name movie-cluster
-
-      - name: Login to Amazon ECR
-        run: |
-          aws ecr get-login-password --region us-east-1 | \
-          docker login --username AWS --password-stdin 949829287785.dkr.ecr.us-east-1.amazonaws.com
 
       - name: Create regcred secret if it doesn't exist
         run: |
