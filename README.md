@@ -23,7 +23,12 @@ EKS cluster
  Worker nodes
   ![image](https://github.com/user-attachments/assets/2c60fb57-ee38-488f-93a0-b0f07fe4312d)
 
-  Final Output -
+  FROM Bastion HOST info - 
+
+![image](https://github.com/user-attachments/assets/3e74721a-2b59-4cc8-a590-450ba044a978)
+
+
+Final Output -
 
   ![image](https://github.com/user-attachments/assets/446eaad8-2d6e-4fe0-8939-4436ea8111f6)
 
