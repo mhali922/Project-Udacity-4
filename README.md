@@ -14,4 +14,19 @@ Movie Picture Pipeline project
 
   ![image](https://github.com/user-attachments/assets/7aa363cf-ee87-4fee-bb24-39588c84b6a6)
 
+
+  K8 Cluster component -
+
+EKS cluster
+  ![image](https://github.com/user-attachments/assets/63cf707e-43af-4a01-9c4f-cfbc7b034326)
+
+ Worker nodes
+  ![image](https://github.com/user-attachments/assets/2c60fb57-ee38-488f-93a0-b0f07fe4312d)
+
+  Final Output -
+
+  ![image](https://github.com/user-attachments/assets/446eaad8-2d6e-4fe0-8939-4436ea8111f6)
+
+
+
   
