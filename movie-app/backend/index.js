@@ -5,7 +5,7 @@ const port = 3001;
 
 // Enable CORS for your frontend origin
 app.use(cors({
-  origin: 'http://a5007a8954fb84713a962829f408f5bb-472749424.us-east-1.elb.amazonaws.com' // replace with your actual frontend IP/domain
+  origin: 'http://acf0dfe1192b84a7491483c690407748-2085986934.us-east-1.elb.amazonaws.com' // replace with your actual frontend IP/domain
 }));
 
 const movies = [
