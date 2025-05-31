@@ -86,13 +86,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-	    - name: Update kubeconfig for EKS cluster
-	      run: aws eks --region us-east-1 update-kubeconfig --name movie-cluster
+	  - name: Update kubeconfig for EKS cluster
+	    run: aws eks --region us-east-1 update-kubeconfig --name movie-cluster
   
-	    - name: Login to Amazon ECR
+	  - name: Login to Amazon ECR
         run: |
-		      aws ecr get-login-password --region us-east-1 | \
-		      docker login --username AWS --password-stdin 949829287785.dkr.ecr.us-east-1.amazonaws.com
+		  aws ecr get-login-password --region us-east-1 | \
+		  docker login --username AWS --password-stdin 949829287785.dkr.ecr.us-east-1.amazonaws.com
   
       - name: Create regcred secret in Kubernetes
 	      run: |
@@ -102,5 +102,5 @@ jobs:
 		    --from-file=.dockerconfigjson=$HOME/.docker/config.json \
 		    --type=kubernetes.io/dockerconfigjson || echo "regcred already exists"
   
-	    - name: Deploy Backend
+	  - name: Deploy Backend
 	      run: kubectl apply -f ./movie-app/k8/backend-dep-service.yaml
