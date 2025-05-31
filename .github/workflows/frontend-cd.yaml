@@ -56,7 +56,7 @@ jobs:
         working-directory: ./movie-app/frontend
         run: |
           docker build \
-            --build-arg REACT_APP_MOVIE_API_URL=http://backend-service:3001/movies \
+            --build-arg REACT_APP_MOVIE_API_URL=http://a5007a8954fb84713a962829f408f5bb-472749424.us-east-1.elb.amazonaws.com:3001/movies \
             -t $ECR_REPOSITORY:$IMAGE_TAG \
             .
 
