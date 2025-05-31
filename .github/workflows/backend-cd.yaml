@@ -60,6 +60,8 @@ jobs:
 
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registry-type: "public"
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -71,9 +73,9 @@ jobs:
           
       - name: Push Docker image to ECR
         run: docker push $ECR_REPOSITORY:$IMAGE_TAG
-		
+
   deploy:
-    needs: push
+    needs: build_and_push
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -86,21 +88,21 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
-	  - name: Update kubeconfig for EKS cluster
-	    run: aws eks --region us-east-1 update-kubeconfig --name movie-cluster
-  
-	  - name: Login to Amazon ECR
+      - name: Update kubeconfig for EKS cluster
+        run: aws eks --region us-east-1 update-kubeconfig --name movie-cluster
+
+      - name: Login to Amazon ECR
         run: |
-		  aws ecr get-login-password --region us-east-1 | \
-		  docker login --username AWS --password-stdin 949829287785.dkr.ecr.us-east-1.amazonaws.com
-  
-      - name: Create regcred secret in Kubernetes
-	      run: |
-		    mkdir -p ~/.docker
-		    echo '{"auths":{"949829287785.dkr.ecr.us-east-1.amazonaws.com":{"username":"AWS","password":"'$(aws ecr get-login-password --region us-east-1)'"}}}' > ~/.docker/config.json
-		    kubectl create secret generic regcred \
-		    --from-file=.dockerconfigjson=$HOME/.docker/config.json \
-		    --type=kubernetes.io/dockerconfigjson || echo "regcred already exists"
-  
-	  - name: Deploy Backend
-	      run: kubectl apply -f ./movie-app/k8/backend-dep-service.yaml
+          aws ecr get-login-password --region us-east-1 | \
+          docker login --username AWS --password-stdin 949829287785.dkr.ecr.us-east-1.amazonaws.com
+
+      - name: Create regcred secret if it doesn't exist
+        run: |
+          kubectl get secret regcred || \
+          kubectl create secret docker-registry regcred \
+            --docker-server=949829287785.dkr.ecr.us-east-1.amazonaws.com \
+            --docker-username=AWS \
+            --docker-password=$(aws ecr get-login-password --region us-east-1)
+
+      - name: Deploy Backend
+        run: kubectl apply -f ./movie-app/k8/backend-dep-service.yaml
