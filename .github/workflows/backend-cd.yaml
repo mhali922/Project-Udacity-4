@@ -58,19 +58,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Login to Amazon ECR
-        uses: aws-actions/amazon-ecr-login@v1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
-          registry-type: "public"
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: ${{ env.AWS_REGION }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
         run: |
           aws ecr get-login-password --region $AWS_REGION | \
-          docker login --username AWS --password-stdin 949829287785.dkr.ecr.us-east-1.amazonaws.com
+          docker login --username AWS --password-stdin $ECR_REPOSITORY
 
       - name: Build Docker image
         run: docker build -t $ECR_REPOSITORY:$IMAGE_TAG ./movie-app/backend
@@ -93,7 +91,7 @@ jobs:
           aws-region: ${{ env.AWS_REGION }}
 
       - name: Update kubeconfig for EKS cluster
-        run: aws eks --region us-east-1 update-kubeconfig --name movie-cluster
+        run: aws eks --region $AWS_REGION update-kubeconfig --name movie-cluster
 
       - name: Create regcred secret if it doesn't exist
         run: |
@@ -101,7 +99,7 @@ jobs:
           kubectl create secret docker-registry regcred \
             --docker-server=949829287785.dkr.ecr.us-east-1.amazonaws.com \
             --docker-username=AWS \
-            --docker-password=$(aws ecr get-login-password --region us-east-1)
+            --docker-password=$(aws ecr get-login-password --region $AWS_REGION)
 
       - name: Deploy Backend
         run: kubectl apply -f ./movie-app/k8/backend-dep-service.yaml
