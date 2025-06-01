@@ -4,7 +4,7 @@ function App() {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    fetch(process.env.REACT_APP_MOVIE_API_URL || "http://ae143bc1573cc4ea39b517fcbedb4641-1055173227.us-east-1.elb.amazonaws.com:3001/movies")
+    fetch(process.env.REACT_APP_MOVIE_API_URL || "http://a5007a8954fb84713a962829f408f5bb-472749424.us-east-1.elb.amazonaws.com:3001/movies")
       .then((res) => res.json())
       .then(setMovies)
       .catch(console.error);
