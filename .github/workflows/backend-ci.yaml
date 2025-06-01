@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Cache npm modules
+      - name: Cachee npm modules
         uses: actions/cache@v4
         with:
           path: movie-app/backend/node_modules
