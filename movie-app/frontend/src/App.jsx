@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 
 function App() {
   const [movies, setMovies] = useState([]);
-
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_MOVIE_API_URL}/movies`)
-      .then((res) => res.json())
-      .then(setMovies)
-      .catch(console.error);
-  }, []);
+  const apiUrl = process.env.REACT_APP_MOVIE_API_URL;
+  fetch(`${apiUrl}/movies`)
+    .then((res) => res.json())
+    .then(setMovies)
+    .catch(console.error);
+}, []);
 
   return (
     <div>
