@@ -1,22 +1,24 @@
-# Build Stage
-FROM node:18 as build
+# Build stage
+FROM node:16-alpine AS builder
+
 WORKDIR /app
 
-# Copy app code
-COPY . .
-
-# Pass environment variable at build time
+# Accept build-time variable
 ARG REACT_APP_MOVIE_API_URL
 ENV REACT_APP_MOVIE_API_URL=$REACT_APP_MOVIE_API_URL
 
-# Install deps and build the app
-RUN npm install && npm run build
+# Copy package files first (for better caching)
+COPY package.json package-lock.json ./
+RUN npm install
 
-# Serve stage 
+# Copy source code
+COPY . .
+
+# Build React app with env var
+RUN npm run build
+
+# Production stage
 FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
-
+COPY --from=builder /app/build /usr/share/nginx/html
 EXPOSE 80
-
 CMD ["nginx", "-g", "daemon off;"]
-
