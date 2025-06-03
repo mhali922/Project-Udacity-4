@@ -2,9 +2,6 @@
   "name": "frontend",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -13,5 +10,15 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-scripts": "^3.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-plugin-react": "^7.37.5"
+  },
+  "scripts": {
+    "lint": "eslint src --ext .js,.jsx",
+    "test": "echo \"No tests yet\" && exit 0",
+    "start": "react-scripts start",
+    "build": "react-scripts build"
   }
 }
