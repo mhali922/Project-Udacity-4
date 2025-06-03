@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - 'frontend/**'
+      - 'movie-app/frontend/**'
 
 jobs:
   frontend-cd:
