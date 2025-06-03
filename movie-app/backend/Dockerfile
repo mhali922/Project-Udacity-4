@@ -10,5 +10,5 @@ COPY . .
 # Optional: Document the exposed port (for clarity)
 EXPOSE 3001
 
-# Run the app Gunicorn on port 3001
+# Run the app Gunicorn with on port 3001
 CMD ["gunicorn", "-b", "0.0.0.0:3001", "app:app"]
