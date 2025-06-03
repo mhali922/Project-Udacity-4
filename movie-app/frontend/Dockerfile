@@ -16,7 +16,7 @@ RUN npm install
 COPY . .
 
 # React build fix for crypto issue in Webpack on Node 17+
-ENV NODE_OPTIONS=--openssl-legacy-provider
+#ENV NODE_OPTIONS=--openssl-legacy-provider
 ENV SKIP_PREFLIGHT_CHECK=true
 
 # Build the React app
