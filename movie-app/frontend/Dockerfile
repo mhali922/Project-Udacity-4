@@ -1,6 +1,6 @@
 # Build stage first
 
-FROM node:18 AS builder
+FROM node:16 AS builder
 
 WORKDIR /app
 
@@ -15,6 +15,9 @@ COPY . .
 
 # Skip lint preflight check in CRA
 ENV SKIP_PREFLIGHT_CHECK=true
+
+# Set legacy OpenSSL provider for Node.js >=17
+ENV NODE_OPTIONS=--openssl-legacy-provider
 
 RUN npm run build
 
