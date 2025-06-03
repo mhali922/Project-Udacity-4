@@ -13,7 +13,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: udacity-frontend-repo
+        working-directory: movie-app/frontend
 
     steps:
       - name: Checkout code
@@ -32,7 +32,7 @@ jobs:
 
       - name: Build, tag, and push Docker image
         env:
-          ECR_REPOSITORY: frontend
+          ECR_REPOSITORY: udacity-frontend-repo
           IMAGE_TAG: ${{ github.sha }}
         run: |
           ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
