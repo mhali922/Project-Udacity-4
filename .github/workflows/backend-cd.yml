@@ -53,6 +53,6 @@ jobs:
           IMAGE_URI: 949829287785.dkr.ecr.us-east-1.amazonaws.com/udacity-backend-repo:${{ github.sha }}
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          sed -i "s|__IMAGE_TAG__|$IMAGE_TAG|" movie-app/backend/k8s/backend-deployment.yaml
+          sed -i "s|__IMAGE_TAG__|$IMAGE_TAG|" k8s/deployment.yaml
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/service.yaml
