@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: backend
-        image: <your_ecr_image_url>
+        image: 949829287785.dkr.ecr.us-east-1.amazonaws.com/udacity-backend-repo:latest
         ports:
         - containerPort: 3001
