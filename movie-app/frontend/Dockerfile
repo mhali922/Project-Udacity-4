@@ -12,7 +12,7 @@ ENV REACT_APP_MOVIE_API_URL=$REACT_APP_MOVIE_API_URL
 # Install deps and build the app
 RUN npm install && npm run build
 
-# Serve stage build
+# Serve stage 
 FROM nginx:alpine
 COPY --from=build /app/build /usr/share/nginx/html
 
