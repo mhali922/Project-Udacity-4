@@ -3,8 +3,7 @@ import React, { useEffect, useState } from "react";
 function App() {
   const [movies, setMovies] = useState([]);
   useEffect(() => {
-  const apiUrl = process.env.REACT_APP_MOVIE_API_URL.replace(/\/$/, "");
-  fetch(`${apiUrl}/movies`)
+    fetch("http://a581e3170981148a5a2c27a86c38f26c-1987784997.us-east-1.elb.amazonaws.com/movies")
     .then(response => response.json())
     .then(data => setMovies(data))
     .catch(error => console.error(error));
