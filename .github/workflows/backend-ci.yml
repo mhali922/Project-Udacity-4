@@ -12,6 +12,9 @@ jobs:
   lint:
     name: Lint Backend Code
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: movie-app/backend
 
     steps:
       - name: Checkout code
