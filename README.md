@@ -17,7 +17,10 @@ Movie Picture Pipeline project
 
   K8 Cluster component -
 
-EKS cluster
+EKS cluster and resources
+
+![image](https://github.com/user-attachments/assets/e5bbc6bc-4a7e-4196-a97e-9eaa0e62de48)
+
   ![image](https://github.com/user-attachments/assets/63cf707e-43af-4a01-9c4f-cfbc7b034326)
 
 LoadBalanacer :
