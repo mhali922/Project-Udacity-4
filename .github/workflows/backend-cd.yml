@@ -2,9 +2,12 @@ name: Backend CD
 
 on:
   push:
-    branches: [ main ]
     paths:
       - 'movie-app/backend/**'
+  pull_request:
+    paths:
+      - 'movie-app/backend/**'
+  workflow_dispatch: 
 
 jobs:
   lint:
