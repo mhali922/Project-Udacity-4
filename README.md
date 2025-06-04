@@ -20,6 +20,10 @@ Movie Picture Pipeline project
 EKS cluster
   ![image](https://github.com/user-attachments/assets/63cf707e-43af-4a01-9c4f-cfbc7b034326)
 
+LoadBalanacer :
+
+![image](https://github.com/user-attachments/assets/a3d472d3-f2f9-4f7f-ad32-6d0b5ae65ac7)
+
  Worker nodes
   ![image](https://github.com/user-attachments/assets/2c60fb57-ee38-488f-93a0-b0f07fe4312d)
 
@@ -29,8 +33,10 @@ EKS cluster
 
 
 Final Output -
+![image](https://github.com/user-attachments/assets/20f5607c-a0f0-4555-a33b-743a9e0e65c1)
 
-  ![image](https://github.com/user-attachments/assets/446eaad8-2d6e-4fe0-8939-4436ea8111f6)
+
+
 
 
 
