@@ -12,6 +12,9 @@ jobs:
   lint:
     name: Lint Code
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: movie-app/frontend
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -40,6 +43,9 @@ jobs:
   test:
     name: Run Tests
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: movie-app/frontend
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -68,6 +74,9 @@ jobs:
   build:
     name: Build Docker Image
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: movie-app/frontend
     needs: [lint, test]
     steps:
       - name: Checkout Code
