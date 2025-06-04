@@ -8,11 +8,12 @@ CORS(
     origins=[
         "http://aa3452b66f0bb4a5b9b95a0448-930219611."
         "us-east-1.elb.amazonaws.com"
-    ]
+    ],
+    supports_credentials=True  # Add this
 )
 
 
-@app.route('/movies')
+@app.route('/movies', methods=['GET', 'OPTIONS'])
 def get_movies():
     return jsonify([
         {"id": 1, "title": "Inception", "year": 2010},
