@@ -14,11 +14,7 @@ spec:
     spec:
       containers:
       - name: frontend
-<<<<<<< Updated upstream:movie-app/frontend/k8s/deployment.yaml
         image: 949829287785.dkr.ecr.us-east-1.amazonaws.com/udacity-frontend-repo:__IMAGE_TAG__
-=======
-        image: 949829287785.dkr.ecr.us-east-1.amazonaws.com/udacity-frontend-repo:latest
         imagePullPolicy: Always
->>>>>>> Stashed changes:movie-app/k8/frontend-dep-service.yaml
         ports:
         - containerPort: 80
