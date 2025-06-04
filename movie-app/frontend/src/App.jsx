@@ -3,11 +3,11 @@ import React, { useEffect, useState } from "react";
 function App() {
   const [movies, setMovies] = useState([]);
   useEffect(() => {
-  const apiUrl = process.env.REACT_APP_MOVIE_API_URL;
+  const apiUrl = process.env.REACT_APP_MOVIE_API_URL.replace(/\/$/, "");
   fetch(`${apiUrl}/movies`)
-    .then((res) => res.json())
-    .then(setMovies)
-    .catch(console.error);
+    .then(response => response.json())
+    .then(data => setMovies(data))
+    .catch(error => console.error(error));
 }, []);
 
   return (
