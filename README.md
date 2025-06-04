@@ -36,7 +36,10 @@ LoadBalanacer :
 
 
 Final Output -
-![image](https://github.com/user-attachments/assets/20f5607c-a0f0-4555-a33b-743a9e0e65c1)
+![image](https://github.com/user-attachments/assets/7e76a743-1d4d-4966-b1a0-b43b3717b8d5)
+
+![image](https://github.com/user-attachments/assets/8eeb29d3-7600-4e3f-b032-53b889a73393)
+
 
 
 
