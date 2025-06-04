@@ -7,17 +7,55 @@ on:
       - 'movie-app/backend/**'
 
 jobs:
-  backend-cd:
+  lint:
+    name: Lint Backend
     runs-on: ubuntu-latest
-    environment: production
-
-    defaults:
-      run:
-        working-directory: movie-app/backend
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install flake8
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8
+
+      - name: Run lint
+        run: flake8 .
+
+  test:
+    name: Test Backend
+    runs-on: ubuntu-latest
+    needs: lint
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+
+      - name: Run tests
+        run: pytest
+
+  build_and_deploy:
+    name: Build, Push Docker, and Deploy
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - uses: actions/checkout@v3
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -26,11 +64,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Log in to Amazon ECR
-        id: login-ecr
+      - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build, tag, and push Docker image
+      - name: Build Docker image
         env:
           ECR_REPOSITORY: udacity-backend-repo
           IMAGE_TAG: ${{ github.sha }}
@@ -38,21 +75,19 @@ jobs:
           ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
           REGION=${{ secrets.AWS_REGION }}
           IMAGE_URI="$ACCOUNT_ID.dkr.ecr.$REGION.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG"
-          
           docker build -t $IMAGE_URI .
-          docker push $IMAGE_URI
-
           echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
+
+      - name: Push Docker image to ECR
+        run: |
+          docker push $IMAGE_URI
 
       - name: Update kubeconfig
         run: |
           aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ secrets.AWS_REGION }}
 
       - name: Deploy to EKS
-        env:
-          IMAGE_URI: 949829287785.dkr.ecr.us-east-1.amazonaws.com/udacity-backend-repo:${{ github.sha }}
-          IMAGE_TAG: ${{ github.sha }}
         run: |
-          sed -i "s|__IMAGE_TAG__|$IMAGE_TAG|" k8s/deployment.yaml
+          sed -i "s|__IMAGE_TAG__|${{ github.sha }}|" k8s/deployment.yaml
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/service.yaml
