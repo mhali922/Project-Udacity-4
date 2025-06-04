@@ -7,7 +7,7 @@ CORS(
     app,
     resources={r"/*": {"origins": [
         (
-            "http://aa3452b66f0bb4a5b9b95a0448-930219611."
+            "http://aa3452b66f0bb4a5b9b95a0448-930219601."
             "us-east-1.elb.amazonaws.com"
         )
     ]}},
