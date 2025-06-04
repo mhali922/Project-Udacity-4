@@ -13,8 +13,10 @@ spec:
         app: frontend
     spec:
       containers:
-      - name: frontend
-        image: 949829287785.dkr.ecr.us-east-1.amazonaws.com/udacity-frontend-repo:__IMAGE_TAG__
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 80
+        - name: frontend
+          image: 949829287785.dkr.ecr.us-east-1.amazonaws.com/udacity-frontend-repo:__IMAGE_TAG__
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: regcred  # Needed if your ECR repo requires authentication
