@@ -7,7 +7,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Optional: exposed port for backend app
+# Optional: exposed port for backend
 EXPOSE 3001
 
 # Run the app Gunicorn with on port 3001
