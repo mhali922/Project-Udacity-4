@@ -10,7 +10,7 @@ RUN npm ci
 
 COPY . .
 
-# Explicitly write .env.production from build arg
+# Explicitly write .env.production from build arg .
 RUN echo "REACT_APP_MOVIE_API_URL=$REACT_APP_MOVIE_API_URL" > .env.production
 
 RUN npm run build
