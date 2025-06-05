@@ -7,7 +7,7 @@ on:
       - 'movie-app/frontend/**'
   pull_request:
     paths:
-      - 'frontend/**'
+      - 'movie-app/frontend/**'
   workflow_dispatch: 
 
 jobs:
