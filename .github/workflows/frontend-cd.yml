@@ -108,6 +108,14 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
+      - name: Create ECR repository if it doesn't exist
+        run: |
+          aws ecr describe-repositories --repository-names $ECR_REPOSITORY --region $AWS_REGION || \
+          aws ecr create-repository --repository-name $ECR_REPOSITORY --region $AWS_REGION
+        env:
+          AWS_REGION: us-east-1
+          ECR_REPOSITORY: udacity-frontend-repo
+
       - name: Build and push Docker image
         env:
           ECR_REPOSITORY: udacity-frontend-repo
